@@ -8,19 +8,23 @@ terraform {
 }
 
 provider "cloudflare" {
-  api_token = var.cloudflare-api_token
+  api_token = var.api_token
+}
+
+variable "api_token"{
+    default = null
 }
 
 variable "zone_id" {
-  default = var.zone_id
+  default = null
 }
 
 variable "account_id" {
-  default = var.account_id
+  default = null
 }
 
 variable "domain" {
-  default = var.domain
+  default = null
 }
 
 resource "cloudflare_record" "test"{
@@ -29,4 +33,14 @@ resource "cloudflare_record" "test"{
     value = "66.102.210.152"
     type = "A"
     proxied = true
+}
+
+resource "cloudflare_zone_settings_override" "venenga-net-settings"{
+    zone_id = var.zone_id
+
+    settings {
+        tls_1_3 = "on"
+        automatic_https_rewrites = "on"
+        ssl = "strict"
+    }
 }
