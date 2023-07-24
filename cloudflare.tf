@@ -1,4 +1,11 @@
 terraform {
+  cloud {
+    organization = "drewvpopc"
+
+    workspaces {
+      name = "Venenga-net_Cloudflare"
+    }
+  }
   required_providers {
     cloudflare = {
       source = "cloudflare/cloudflare"
